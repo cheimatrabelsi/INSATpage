@@ -17,7 +17,13 @@ export class AvisService {
       findAll(): Promise<AvisEntity[]> {
         return this.avisRepository.find();
       }
-    
+      async findWithComments(id: string): Promise<AvisEntity> {
+        return this.avisRepository
+          .createQueryBuilder('avis')
+          .leftJoinAndSelect('avis.comments', 'comments')
+          .where('avis.id = :id', { id })
+          .getOne();
+      }
       async findOne(id): Promise<AvisEntity> {
         const Entity = await this.avisRepository.findOne({where: {id}});
         if (! Entity) {
@@ -41,4 +47,5 @@ export class AvisService {
         }
         return result;
       }
+     
 }

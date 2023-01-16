@@ -15,7 +15,10 @@ export class AvisController {
   findAll() {
     return this.avisService.findAll();
   }
-
+  @Get('/withComment/:id')
+  findOneWithComments() {
+    return this.avisService.findWithComments(':id');
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.avisService.findOne(+id);
